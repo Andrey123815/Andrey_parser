@@ -1,0 +1,1 @@
+/usr/bin/cc -pedantic -g   CMakeFiles/dz-4.dir/src/clever_string.c.o CMakeFiles/dz-4.dir/src/main.c.o CMakeFiles/dz-4.dir/src/parser.c.o  -o dz-4 
