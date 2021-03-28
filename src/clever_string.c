@@ -21,6 +21,7 @@ string_t *create_string() {
 
     return str;
 }
+
 int free_string(string_t *str) {
     if (str == NULL) {
         return 1;
@@ -31,6 +32,7 @@ int free_string(string_t *str) {
 
     return 0;
 }
+
 int add_symbol(string_t *str, char symbol) {
     if (str == NULL) {
         return 1;
@@ -47,6 +49,24 @@ int add_symbol(string_t *str, char symbol) {
 
     return 0;
 }
+
+int delete_symbol(string_t *str, char symbol) {
+    if (str == NULL) {
+        return 1;
+    }
+
+    if (str->capacity <= str->size - 1) {
+        if (resize(str) != 0) {
+            return 1;
+        }
+    }
+
+    str->str[str->size--] = symbol;
+    str->str[str->size] = '\0';
+
+    return 0;
+}
+
 int resize(string_t *str) {
     if (str == NULL) {
         return 1;
@@ -80,12 +100,21 @@ int read_str(FILE *fp, string_t *str) {
     clear_string(str);
 
     int symbol;
-
+    int i;
     while ((symbol = fgetc(fp)) != EOF) {
         if (symbol == '\n' || symbol == '\r') {
             if ((symbol = fgetc(fp)) != EOF && symbol != '\t' && symbol != ' ') {
-                // вернуть указатель
+                fseek(fp,-1,SEEK_CUR);
+                //printf("%s", "success");
                 break;
+            } else {
+                while ((symbol = fgetc(fp) == '\t') || (symbol = fgetc(fp) == ' ')) {}
+                //symbol = fgetc(fp);
+                //printf("%d", (char)symbol);
+                add_symbol(str, ' ');
+                while ((symbol = fgetc(fp) == '\r') || (symbol = fgetc(fp) == '\n')) {
+                    add_symbol(str, (char) symbol);
+                }
             }
         }
 

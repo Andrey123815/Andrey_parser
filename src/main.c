@@ -10,7 +10,7 @@ int main() {
         return 1;
     }
     read_str(ptr, str);
-    //printf("size: %s\n", str->str);
+    printf("string: %s\n", str->str);
     //printf("path: %s\n", SOURCE_DIR);
     //printf("%d", (int)(str->str[0]));
     fclose(ptr);
