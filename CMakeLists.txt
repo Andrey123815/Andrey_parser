@@ -4,7 +4,6 @@ project(dz-4)
 set(CMAKE_C_FLAGS "-pedantic")
 set(CMAKE_CXX_FLAGS "-pedantic")
 
-
 # <Source>
 include_directories("include")
 

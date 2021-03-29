@@ -5,6 +5,8 @@ CMakeFiles/dz-4.dir/src/clever_string.c.o: ../include/clever_string.h
 CMakeFiles/dz-4.dir/src/clever_string.c.o: ../src/clever_string.c
 
 CMakeFiles/dz-4.dir/src/main.c.o: ../include/clever_string.h
+CMakeFiles/dz-4.dir/src/main.c.o: ../include/parser.h
+CMakeFiles/dz-4.dir/src/main.c.o: ../include/types_and_tables.h
 CMakeFiles/dz-4.dir/src/main.c.o: ../src/main.c
 
 CMakeFiles/dz-4.dir/src/parser.c.o: ../include/clever_string.h

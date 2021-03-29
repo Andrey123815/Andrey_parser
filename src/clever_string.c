@@ -22,6 +22,7 @@ string_t *create_string() {
     return str;
 }
 
+
 int free_string(string_t *str) {
     if (str == NULL) {
         return 1;
@@ -32,6 +33,16 @@ int free_string(string_t *str) {
 
     return 0;
 }
+
+
+string_t string_converter(char* string_in_char) {
+    string_t *ptr = create_string();
+    for (unsigned int i = 0; i < strlen(string_in_char); ++i) {
+        add_symbol(ptr,string_in_char[i]);
+    }
+    return *ptr;
+}
+
 
 int add_symbol(string_t *str, char symbol) {
     if (str == NULL) {
@@ -50,22 +61,19 @@ int add_symbol(string_t *str, char symbol) {
     return 0;
 }
 
-int delete_symbol(string_t *str, char symbol) {
-    if (str == NULL) {
-        return 1;
+
+string_t delete_symbols_in_begin(string_t key_with_value, int n) {
+    string_t *value = NULL;
+    if (n >= key_with_value.size) {
+        printf("n >= size");
+        return *value;
     }
-
-    if (str->capacity <= str->size - 1) {
-        if (resize(str) != 0) {
-            return 1;
-        }
+    resize((string_t *) value->size);  // как увеличиваем сайз, нужен ли криэйт стринг?
+    for (unsigned  int i = n; i < key_with_value.size; ++i) {
+        add_symbol(value, key_with_value.str[i]);
     }
-
-    str->str[str->size--] = symbol;
-    str->str[str->size] = '\0';
-
-    return 0;
 }
+
 
 int resize(string_t *str) {
     if (str == NULL) {
@@ -82,6 +90,8 @@ int resize(string_t *str) {
 
     return 0;
 }
+
+
 int clear_string(string_t *str) {
     if (str == NULL) {
         return 1;
@@ -92,6 +102,8 @@ int clear_string(string_t *str) {
 
     return 0;
 }
+
+
 int read_str(FILE *fp, string_t *str) {
     if (fp == NULL || str == NULL) {
         return 1;
@@ -124,4 +136,23 @@ int read_str(FILE *fp, string_t *str) {
     }
 
     return 0;
+}
+
+
+result_t str_str(string_t a, string_t multi_a) {
+    result_t res;
+    for (unsigned int i = 0; i < multi_a.size - a.size; ++i) {
+        for (unsigned int j = 0; j < a.size; ++j) {
+
+            if (a.str[i] != multi_a.str[i]) {
+                break;
+            }
+
+            if (j == a.size - 1) {
+                res.result_status = 1;
+                res.ref = i;
+            }
+        }
+    }
+    return res;
 }

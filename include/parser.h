@@ -9,21 +9,16 @@ typedef struct {
     string_t *to;
     string_t *date;
     int part;
-} final_t;
+} req_date_t;
 
-int set_from(final_t *final, string_t *str) {
+lexem_t get_lexem_key(string_t s);  // возвращает лексему для перехода в следующий стейт
 
-    //string_cpy(final->from, str + 5);
-    // PARSE
-    // From: wlejfhlwe
+string_t font_parser(string_t key_in_random_font); // понижает регистр до строчного
 
-    return 0;
-}
+string_t get_multi_bound(string_t content_type);  // возвращает или пустую структуру string_t или string_t со значением boundary
 
-lexem_t get_lexem_key(string_t s, char **end);
+int get_number_parts(string_t text, string_t boundary, int part);  // итерационно подсчитывает количество партов
 
-//char *parse_key(char *string); // find keys(from, date, to, content-type)
-char *parser_key_value(string_t string); // find key value
-char *font_parser(char* key_in_random_font); // key in one font(lower)
+string_t get_key_value(string_t string, int status_key);  // считывает значение ключа
 
 #endif //DZ_4_PARSER_H
