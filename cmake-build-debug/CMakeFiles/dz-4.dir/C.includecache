@@ -25,10 +25,16 @@ stdio.h
 -
 types_and_tables.h
 /home/andrey/Рабочий стол/DZ_4_M/src/types_and_tables.h
-parser.h
-/home/andrey/Рабочий стол/DZ_4_M/src/parser.h
 clever_string.h
 /home/andrey/Рабочий стол/DZ_4_M/src/clever_string.h
+parser.h
+/home/andrey/Рабочий стол/DZ_4_M/src/parser.h
+sys/stat.h
+-
+unistd.h
+-
+sys/mman.h
+-
 
 /home/andrey/Рабочий стол/DZ_4_M/src/parser.c
 parser.h

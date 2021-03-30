@@ -18,7 +18,12 @@ int main(int argc, char **argv) {
     read_str(ptr, str);
     printf("string: %s\n", str->str);
     fclose(ptr);
-    free_string(str);*/
+    free_string(str);
+
+    char * str = "get_result success";
+    string_t  string;
+    string = string_converter(str);
+    printf("%s", string.str);*/
 
     if (argc != 2) {
         printf("The program needs a file path to .eml document\n");
@@ -51,7 +56,7 @@ int main(int argc, char **argv) {
     string_t str;
     state_t state = S_GET_KEY;
 
-    while(state == S_EOF) {  // !=
+    while(state != S_EOF) {
 
         read_str(file_eml, &str);
         lexem_t lexem = get_lexem_key(str);
@@ -71,9 +76,6 @@ int main(int argc, char **argv) {
             return 0;
         state = rule.state;
     }
-
-
-
 
     return 0;
 }
