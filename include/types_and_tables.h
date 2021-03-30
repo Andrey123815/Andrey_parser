@@ -1,11 +1,13 @@
 #ifndef DZ_4_TYPES_AND_TABLES_H
-#define DZ_4_PARSER_H
+#define DZ_4_TYPES_AND_TABLES_H
 
 #include <stddef.h>
 
 typedef enum {
+    L_TO,
+    L_FROM,
+    L_DATE,
     L_CONTENT_TYPE,
-    L_OTHER_KEYS,
     L_ENTER,
     L_NO_ENTER,
     L_EOF,
@@ -20,8 +22,8 @@ typedef struct {
 } flag_lexem;
 
 typedef enum {
-    S_GET_KEY,
-    S_GET_KEY_VALUE,
+    S_KEY,
+    S_VALUE,
     S_ENTER,
     S_TEXT,
     S_EOF,
@@ -34,10 +36,9 @@ typedef enum {
     ENTER,
     TEXT_FOUND,
     BOUND_FOUND,
-} cjson_event_t;
+} event_t;
 
-typedef void (*callback_t)(cjson_event_t event, void *data);
-//typedef void *(action_t)(char*, char**end, cjson_callback_t callback, void *data);
+typedef void (*callback_t)(event_t event, void *data);
 typedef int (*action_t)(callback_t callback, void *data);
 
 typedef struct {
@@ -47,20 +48,20 @@ typedef struct {
 
 static int keys(callback_t callback, void *data) { callback(KEY, data); return 0;}
 static int values(callback_t callback, void *data) { callback(VALUE, data); return 0;}
-static int text_bound(callback_t callback, void *data) { callback(TEXT_FOUND, data); return 0;}
+static int body(callback_t callback, void *data) { callback(TEXT_FOUND, data); return 0;}
 static int end(callback_t callback, void *data) { callback(BOUND_FOUND, data); return 0;}
 
 
 const unsigned int S_COUNT = 5;
-const unsigned int L_COUNT = 6;
+const unsigned int L_COUNT = 8;
 
 const rule_t table[S_COUNT][L_COUNT] = {
-                     /*L_CONTENT_TYPE              L_OTHER_KEYS             L_ENTER        L_NO_ENTER          L_EOF        L_TEXT      */
-/*S_GET_KEY*/        {S_GET_KEY_VALUE,values},  {S_GET_KEY_VALUE,values}, {S_ERR,NULL},   {S_ERR,NULL},     {S_ERR,NULL}, {S_ERR,NULL},
-/*S_GET_KEY_VALUE*/  {S_ERR,NULL},              {S_ERR,NULL},             {S_ENTER,NULL}, {S_GET_KEY,keys}, {S_ERR,NULL}, {S_ERR,NULL},
-/*S_ENTER*/          {S_ERR,NULL},              {S_ERR,NULL},             {S_ERR,NULL},   {S_ERR,NULL},     {S_EOF,end},  {S_TEXT,text_bound},
-/*S_TEXT*/           {S_ERR,NULL},              {S_ERR,NULL},             {S_ENTER,NULL}, {S_ERR,NULL},     {S_EOF,end},  {S_ERR,NULL},
-/*S_EOF*/            {S_ERR,NULL},              {S_ERR,NULL},             {S_ERR,NULL},   {S_ERR,NULL},     {S_ERR,NULL}, {S_ERR,NULL}
+                /*L_CONTENT_TYPE              L_TO                      L_FROM                        L_DATE                  L_ENTER                 L_NO_ENTER                   L_EOF                     L_TEXT*/
+/*S_KEY*/  {{S_VALUE,values},    {S_VALUE,values},   {S_VALUE,values},   {S_VALUE,values},   {S_ERR,NULL},  {S_ERR,NULL}, {S_ERR,NULL}, {S_ERR,NULL}},
+/*S_VALUE*/{{S_ERR,NULL}, {S_ERR,NULL}, {S_ERR,NULL},{S_ERR,NULL},{S_ENTER,NULL},{S_KEY,NULL}, {S_ERR,NULL}, {S_ERR,NULL}},
+/*S_ENTER*/{{S_ERR,NULL}, {S_ERR,NULL}, {S_ERR,NULL},{S_ERR,NULL},{S_ERR,NULL},  {S_ERR,NULL}, {S_EOF,NULL}, {S_TEXT,NULL}},
+/*S_TEXT*/ {{S_ERR,NULL}, {S_ERR,NULL}, {S_ERR,NULL},{S_ERR,NULL},{S_ENTER,NULL},  {S_ERR,NULL}, {S_EOF,NULL}, {S_ERR,NULL}},
+/*S_EOF*/  {{S_ERR,NULL}, {S_ERR,NULL}, {S_ERR,NULL},{S_ERR,NULL},{S_ERR,NULL},  {S_ERR,NULL}, {S_ERR,NULL}, {S_ERR,NULL}},
 };
 
-#endif //DZ_4_PARSER_H
+#endif //DZ_4_TYPES_AND_TABLES_H

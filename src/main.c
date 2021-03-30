@@ -9,21 +9,8 @@
 #include <sys/mman.h>
 
 int main(int argc, char **argv) {
-    /*string_t *str = create_string();
-    FILE * ptr = fopen(SOURCE_DIR"/1.txt", "r");
-    if (ptr == NULL) {
-        printf("%s", "not access");
-        return 1;
-    }
-    read_str(ptr, str);
-    printf("string: %s\n", str->str);
-    fclose(ptr);
-    free_string(str);
 
-    char * str = "get_result success";
-    string_t  string;
-    string = string_converter(str);
-    printf("%s", string.str);*/
+    //FILE * ptr = fopen(SOURCE_DIR"/1.txt", "r");
 
     if (argc != 2) {
         printf("The program needs a file path to .eml document\n");
@@ -43,23 +30,20 @@ int main(int argc, char **argv) {
         return -1;
     }
 
-    // using mmap
-    void* file_body = NULL;
-    if ((file_body = mmap(0, statbuf.st_size, PROT_READ, MAP_SHARED, fdin, 0)) == MAP_FAILED) {
-        printf("mmap error\n");
-        return -1;
-    }
     fclose(fdin);
 
 
     FILE * file_eml = fopen(argv[1],"r");
-    string_t str;
-    state_t state = S_GET_KEY;
+    string_t *str = create_string();
+    state_t state = S_KEY;
+    callback_t  callback;
+    req_date_t data;
 
     while(state != S_EOF) {
 
-        read_str(file_eml, &str);
+        read_str(file_eml, str);
         lexem_t lexem = get_lexem_key(str);
+
         if (lexem == L_ERR) {
             return -1;
         }
@@ -68,11 +52,12 @@ int main(int argc, char **argv) {
         if (rule.state == S_ERR)
             return -1;
         if (rule.action != NULL) {
-            if (rule.action(callback, data) == -1)  // как передавать экшн???
+            if (rule.action(callback, &data) == -1)  // как передавать экшн???
                 return -1;
         }
 
         if (rule.state == S_EOF)
+            printf("%s|%s|%s|%s", data.to, data.from, data.date, data.part);
             return 0;
         state = rule.state;
     }

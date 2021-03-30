@@ -36,9 +36,3 @@ unistd.h
 sys/mman.h
 -
 
-/home/andrey/Рабочий стол/DZ_4_M/src/parser.c
-parser.h
-/home/andrey/Рабочий стол/DZ_4_M/src/parser.h
-string.h
--
-

@@ -11,14 +11,14 @@ typedef struct {
     int part;
 } req_date_t;
 
-lexem_t get_lexem_key(string_t s);  // возвращает лексему для перехода в следующий стейт
+lexem_t get_lexem_key(string_t *s);  // возвращает лексему для перехода в следующий стейт
 
-string_t font_parser(string_t key_in_random_font); // понижает регистр до строчного
+string_t *font_parser(string_t *key_in_random_font); // понижает регистр до строчного
 
-string_t get_multi_bound(string_t content_type);  // возвращает или пустую структуру string_t или string_t со значением boundary
+string_t *get_multi_bound(string_t *content_type);  // возвращает или пустую структуру string_t или string_t со значением boundary
 
-int get_number_parts(string_t text, string_t boundary, int part);  // итерационно подсчитывает количество партов
+int get_number_parts(string_t *text, string_t *boundary, int part);  // итерационно подсчитывает количество партов
 
-string_t get_key_value(string_t string, int status_key);  // считывает значение ключа
+string_t *get_key_value(string_t *string, int lexem);  // считывает значение ключа
 
 #endif //DZ_4_PARSER_H
