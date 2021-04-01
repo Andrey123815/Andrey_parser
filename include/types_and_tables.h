@@ -12,7 +12,6 @@ typedef enum {
     L_DATE,
     L_CONTENT_TYPE,
     L_ENTER,
-    L_NO_ENTER,
     L_EOF,
     L_TEXT,
     L_ERR
@@ -25,12 +24,12 @@ typedef struct {
 } flag_lexem;
 
 typedef enum {
-    S_KEY,
-    S_VALUE,
-    S_ENTER,
-    S_TEXT,
-    S_EOF,
-    S_ERR
+    S_BEGIN,
+    S_HEAD,
+    S_HEAD_END,
+    S_BODY,
+    S_BODY_END,
+    S_ERR,
 } state_t;
 
 typedef enum {
@@ -60,8 +59,8 @@ const unsigned int L_COUNT = 8;*/
 
 const rule_t table[S_COUNT][L_COUNT] = {
                 /*L_CONTENT_TYPE              L_TO                      L_FROM                        L_DATE                  L_ENTER                 L_NO_ENTER                   L_EOF                     L_TEXT*/  // NOLINT
-/*S_KEY*/  {{S_VALUE, values},    {S_VALUE, values},   {S_VALUE, values},   {S_VALUE, values},   {S_ERR,NULL},  {S_ERR,NULL}, {S_ERR,NULL}, {S_ERR,NULL}},  // NOLINT
-/*S_VALUE*/{{S_ERR,NULL}, {S_ERR,NULL}, {S_ERR,NULL},{S_ERR,NULL},{S_ENTER,NULL},{S_KEY,NULL}, {S_ERR,NULL}, {S_ERR,NULL}},  // NOLINT
+/*S_BEGIN*/  {{S_HEAD, NULL},    {S_VALUE, values},   {S_VALUE, values},   {S_VALUE, values},   {S_ERR,NULL},  {S_ERR,NULL}, {S_ERR,NULL}, {S_ERR,NULL}},  // NOLINT
+/*S_VALUE*/{{S_ERR, NULL}, {S_ERR,NULL}, {S_ERR,NULL},{S_ERR,NULL},{S_ENTER,NULL},{S_KEY,NULL}, {S_ERR,NULL}, {S_ERR,NULL}},  // NOLINT
 /*S_ENTER*/{{S_ERR,NULL}, {S_ERR,NULL}, {S_ERR,NULL},{S_ERR,NULL},{S_ERR,NULL},  {S_ERR,NULL}, {S_EOF,NULL}, {S_TEXT,NULL}},  // NOLINT
 /*S_TEXT*/ {{S_ERR,NULL}, {S_ERR,NULL}, {S_ERR,NULL},{S_ERR,NULL},{S_ENTER,NULL},  {S_ERR,NULL}, {S_EOF,NULL}, {S_ERR,NULL}},  // NOLINT
 /*S_EOF*/  {{S_ERR,NULL}, {S_ERR,NULL}, {S_ERR,NULL},{S_ERR,NULL},{S_ERR,NULL},  {S_ERR,NULL}, {S_ERR,NULL}, {S_ERR,NULL}},  // NOLINT
