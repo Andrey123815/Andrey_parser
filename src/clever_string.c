@@ -179,6 +179,11 @@ int read_str(FILE *fp, string_t *str) {
         }
     }
 
+    if (symbol == EOF) {
+        clear_string(str);
+        add_symbol(str, EOF);
+    }
+
     return 0;
 }
 
