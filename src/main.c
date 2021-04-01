@@ -6,10 +6,7 @@
 #include <sys/stat.h>
 
 int main(int argc, char **argv) {
-
-   //FILE * ptr = fopen(SOURCE_DIR"/1.txt", "r");
-
-    if (argc != 2) {
+    if (argc != 2) {  // FILE * ptr = fopen(SOURCE_DIR"/1.txt", "r");
         printf("The program needs a file path to .eml document\n");
         return -1;
     }
@@ -23,14 +20,13 @@ int main(int argc, char **argv) {
     fclose(fdin);
 
 
-    FILE * file_eml = fopen(argv[1],"r");
+    FILE * file_eml = fopen(argv[1], "r");
     string_t *str = create_string();
     state_t state = S_KEY;
     callback_t  callback;
     req_date_t data;
 
-    while(state != S_EOF) {
-
+    while (state != S_EOF) {
         read_str(file_eml, str);
         lexem_t lexem = get_lexem_key(str);
 

@@ -38,7 +38,7 @@ int free_string(string_t *str) {
 string_t *string_converter(char* string_in_char) {
     string_t *ptr = create_string();
     for (unsigned int i = 0; i < strlen(string_in_char); ++i) {
-        add_symbol(ptr,string_in_char[i]);
+        add_symbol(ptr, string_in_char[i]);
     }
     return ptr;
 }
@@ -114,12 +114,11 @@ int read_str(FILE *fp, string_t *str) {
     clear_string(str);
 
     int symbol;
-    int i, flag_str = 0;
+    int flag_str = 0;
     while ((symbol = fgetc(fp)) != EOF) {
         if (symbol == '\n' || symbol == '\r') {
-
             if ((symbol = fgetc(fp)) != EOF && symbol != '\t' && symbol != ' ') {
-                fseek(fp,-1,SEEK_CUR);
+                fseek(fp, -1, SEEK_CUR);
                 break;
             }
 
@@ -137,7 +136,7 @@ int read_str(FILE *fp, string_t *str) {
                 }
 
                 if (symbol == '\n' || symbol == '\r') {
-                    fseek(fp,-1,SEEK_CUR);
+                    fseek(fp, -1, SEEK_CUR);
                     flag_str = 1;
                 }
             }

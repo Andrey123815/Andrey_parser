@@ -5,7 +5,7 @@ print_header() {
 }
 
 print_header "RUN cppcheck"
-cppcheck --enable=all --language=c --error-exitcode=1 include src --suppress=missingInclude
+cppcheck --enable=all --language=c --error-exitcode=1 include src --suppress=missingInclude #--suppress=unusedFunction
 
 print_header "RUN cpplint.py"
 cpplint --extensions=c include/* src/*
