@@ -16,6 +16,7 @@ int main(int argc, char **argv) {
         return -1;
     }
     string_t *current_str = create_string();
+
     state_t state = S_KEY;
     callback_t  callback;
     req_date_t data;

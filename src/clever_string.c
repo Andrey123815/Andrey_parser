@@ -23,6 +23,25 @@ string_t *create_string() {
 }
 
 
+string_t *str_tok(string_t *input_str, char sep_symbol) {
+    if (input_str == NULL) {
+        return NULL;
+    }
+
+    string_t *new_str = create_string();
+    unsigned int i = 0;
+
+    for (i = 0; i < input_str->size && input_str->str[i] != sep_symbol; ++i) {
+        if (input_str->str[i] == ' ') {
+            free_string(new_str);
+            return NULL;
+        }
+        add_symbol(new_str,input_str->str[i]);
+    }
+
+    return new_str;
+}
+
 int free_string(string_t *str) {
     if (str == NULL) {
         return 1;
@@ -33,8 +52,6 @@ int free_string(string_t *str) {
 
     return 0;
 }
-
-
 
 int add_symbol(string_t *str, char symbol) {
     if (str == NULL) {
@@ -106,12 +123,11 @@ int read_str(FILE *fp, string_t *str) {
     clear_string(str);
 
     int symbol;
-    int i, flag_str = 0;
+    int flag_str = 0;
     while ((symbol = fgetc(fp)) != EOF) {
         if (symbol == '\n' || symbol == '\r') {
-
             if ((symbol = fgetc(fp)) != EOF && symbol != '\t' && symbol != ' ') {
-                fseek(fp,-1,SEEK_CUR);
+                fseek(fp, -1, SEEK_CUR);
                 break;
             }
 
@@ -129,7 +145,7 @@ int read_str(FILE *fp, string_t *str) {
                 }
 
                 if (symbol == '\n' || symbol == '\r') {
-                    fseek(fp,-1,SEEK_CUR);
+                    fseek(fp, -1, SEEK_CUR);
                     flag_str = 1;
                 }
             }

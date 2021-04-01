@@ -19,27 +19,33 @@ lexem_t get_lexem(string_t *s) {
     font_parser(key_t);
 
     if (strcmp(key_t->str, "content-type") == 0) {
+        free_string(key_t);
         return L_CONTENT_TYPE;
     }
 
     if (strcmp(key_t->str, "date") == 0) {
+        free_string(key_t);
         return L_DATE;
     }
 
     if (strcmp(key_t->str, "from") == 0) {
+        free_string(key_t);
         return L_FROM;
     }
 
     if (strcmp(key_t->str, "to") == 0) {
+        free_string(key_t);
         return L_TO;
     }
 
     if (s->size == 0) {
+        free_string(key_t);
         return L_ENTER;
     } else {
+        free_string(key_t);
         return L_NO_ENTER;
     }
-
+    free_string(key_t);
     return L_ERR;
 }
 
@@ -62,7 +68,7 @@ string_t *get_multi_bound(string_t *content_type) {
         bound_1->str = "";
         return bound_1;
     } else {
-        bound_1->str = "boundary="; // как обозначить кавычки?
+        bound_1->str = "boundary=";  // как обозначить кавычки?
         bound_2->str = "boundary=\"";
 
         if ((k = str_str(bound_1, content_type)).result_status == SUCCESS) {
@@ -92,11 +98,11 @@ string_t *get_key_value(string_t *key_with_value, int lexem) {
     string_t *str = create_string();
 
     if (lexem == TO)  {
-        str = delete_symbols_in_begin(key_with_value,3);  // с учетом двоеточия после ключа
+        str = delete_symbols_in_begin(key_with_value, 3);  // с учетом двоеточия после ключа
     }
 
     if (lexem == FROM || lexem == DATE) {
-        str = delete_symbols_in_begin(key_with_value,5);
+        str = delete_symbols_in_begin(key_with_value, 5);
     }
 
     if (lexem == CONTENT_TYPE) {
@@ -104,7 +110,7 @@ string_t *get_key_value(string_t *key_with_value, int lexem) {
     }
 
     if ((char)str->str[0] == ' ') {
-        return delete_symbols_in_begin(key_with_value,1);
+        return delete_symbols_in_begin(key_with_value, 1);
     }
 
     return str;
