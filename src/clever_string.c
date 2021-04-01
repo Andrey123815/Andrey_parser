@@ -36,7 +36,7 @@ string_t *str_tok(string_t *input_str, char sep_symbol) {
             free_string(new_str);
             return NULL;
         }
-        add_symbol(new_str,input_str->str[i]);
+        add_symbol(new_str, input_str->str[i]);
     }
 
     return new_str;
