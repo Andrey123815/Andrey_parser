@@ -53,7 +53,6 @@ int free_string(string_t *str) {
     return 0;
 }
 
-
 int add_symbol(string_t *str, char symbol) {
     if (str == NULL) {
         return 1;

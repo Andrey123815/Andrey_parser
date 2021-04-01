@@ -3,32 +3,31 @@
 #include "clever_string.h"
 #include "parser.h"
 
-#include <sys/stat.h>
 
 int main(int argc, char **argv) {
-    if (argc != 2) {  // FILE * ptr = fopen(SOURCE_DIR"/1.txt", "r");
+    if (argc != 2) {
         printf("The program needs a file path to .eml document\n");
         return -1;
     }
 
-    FILE *fdin = fopen(argv[1], "r");
-    if (fdin == NULL) {
+    FILE *file_eml = fopen(argv[1],"r");
+    if (file_eml == NULL) {
         printf("Usage %s invalid\n", argv[1]);
         return -1;
     }
+    string_t *current_str = create_string();
 
-    fclose(fdin);
-
-
-    FILE * file_eml = fopen(argv[1], "r");
-    string_t *str = create_string();
     state_t state = S_KEY;
     callback_t  callback;
     req_date_t data;
 
-    while (state != S_EOF) {
-        read_str(file_eml, str);
-        lexem_t lexem = get_lexem_key(str);
+    while(state != S_EOF) {
+        if (read_str(file_eml, current_str)) {
+            // ебана, продумай как тут быть
+            return 1;
+        }
+
+        lexem_t lexem = get_lexem(current_str);
 
         if (lexem == L_ERR) {
             return -1;
@@ -50,5 +49,9 @@ int main(int argc, char **argv) {
         }
         state = rule.state;
     }
+
+    fclose(file_eml);
+    free_string(current_str);
+
     return 0;
 }

@@ -10,13 +10,13 @@
 #include <string.h>
 
 
-lexem_t get_lexem_key(string_t *s) {
+lexem_t get_lexem(string_t *s) {
     if (strcmp(s->str, (const char *) EOF) == 0) {
         return L_EOF;
     }
 
-    string_t *key_t = str_tok(s,':');
-    font_parser(key_t->str);
+    string_t *key_t = str_tok(s->str, ":");
+    font_parser(key_t);
 
     if (strcmp(key_t->str, "content-type") == 0) {
         free_string(key_t);
