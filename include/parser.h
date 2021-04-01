@@ -11,7 +11,7 @@ typedef struct {
     int part;
 } req_date_t;
 
-lexem_t get_lexem_key(string_t *s);  // возвращает лексему для перехода в следующий стейт
+lexem_t get_lexem(string_t *s);  // возвращает лексему для перехода в следующий стейт
 
 string_t *font_parser(string_t *key_in_random_font); // понижает регистр до строчного
 
