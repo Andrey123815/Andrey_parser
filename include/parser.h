@@ -4,12 +4,8 @@
 #include "types_and_tables.h"
 #include "clever_string.h"
 
-typedef struct {
-    string_t *from;
-    string_t *to;
-    string_t *date;
-    int part;
-} req_date_t;
+#include "result.h"
+
 
 lexem_t get_lexem(string_t *s);  // возвращает лексему для перехода в следующий стейт
 

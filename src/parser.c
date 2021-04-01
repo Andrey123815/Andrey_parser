@@ -6,7 +6,6 @@
 #define CONTENT_TYPE 44
 
 #include "parser.h"
-
 #include <string.h>
 
 

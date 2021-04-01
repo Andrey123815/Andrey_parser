@@ -9,10 +9,10 @@ typedef struct {
     size_t capacity;
 } string_t;
 
-typedef struct {
-    int result_status;
-    unsigned int ref;
-} result_t;
+//typedef struct {
+//    int result_status;
+//    unsigned int ref;
+//} result_t;
 
 string_t *create_string();
 
@@ -32,6 +32,6 @@ int clear_string(string_t *);
 
 int read_str(FILE *, string_t *);
 
-result_t str_str(string_t *a, string_t *multi_a);
+//result_t str_str(string_t *a, string_t *multi_a);
 
 #endif  // INCLUDE_CLEVER_STRING_H_
