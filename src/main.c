@@ -10,7 +10,7 @@
 
 int main(int argc, char **argv) {
 
-    //FILE * ptr = fopen(SOURCE_DIR"/1.txt", "r");
+   //FILE * ptr = fopen(SOURCE_DIR"/1.txt", "r");
 
     if (argc != 2) {
         printf("The program needs a file path to .eml document\n");
@@ -49,18 +49,20 @@ int main(int argc, char **argv) {
         }
 
         rule_t rule = table[state][lexem];
+
         if (rule.state == S_ERR)
             return -1;
+
         if (rule.action != NULL) {
-            if (rule.action(callback, &data) == -1)  // как передавать экшн???
+            if (rule.action(callback, &data) == -1)
                 return -1;
         }
 
-        if (rule.state == S_EOF)
-            printf("%s|%s|%s|%s", data.to, data.from, data.date, data.part);
+        if (rule.state == S_EOF) {
+            printf("%s|%s|%s|%d", data.to->str, data.from->str, data.date->str, data.part);
             return 0;
+        }
         state = rule.state;
     }
-
     return 0;
 }

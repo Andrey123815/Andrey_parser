@@ -114,33 +114,40 @@ int read_str(FILE *fp, string_t *str) {
     clear_string(str);
 
     int symbol;
-    int i;
-    symbol = fgetc(fp);
-    while (symbol != EOF) {
+    int i,flag_str = 0;
+    while ((symbol = fgetc(fp)) != EOF) {
         if (symbol == '\n' || symbol == '\r') {
-            symbol = fgetc(fp);
-            if (symbol != EOF && symbol != '\t' && symbol != ' ') {
+
+            if ((symbol = fgetc(fp)) != EOF && symbol != '\t' && symbol != ' ') {
                 fseek(fp,-1,SEEK_CUR);
                 break;
-            } else if (symbol != EOF) {
+            }
+
+            if (symbol == '\t' || symbol == ' ') {
+                add_symbol(str, ' ');
                 symbol = fgetc(fp);
+
                 while ((symbol == '\t') || (symbol == ' ')) {
                     symbol = fgetc(fp);
-                }  // пропуск табов и пробелов
-                add_symbol(str, ' ');
-                add_symbol(str, symbol);
-                symbol = fgetc(fp);
-                while ((symbol == '\r') || (symbol == '\n')) {
+                }
+
+                while (symbol != '\r' && symbol != EOF && symbol != '\n') {
                     add_symbol(str, (char) symbol);
-                    symbol = fgetc(fp);
+                    symbol = fgetc(fp);;
+                }
+
+                if (symbol == '\n' || symbol == '\r') {
+                    fseek(fp,-1,SEEK_CUR);
+                    flag_str = 1;
                 }
             }
         }
 
-        if (add_symbol(str, (char)symbol) != 0) {
-            return 1;
+        if (flag_str < 1) {
+            if (add_symbol(str, (char) symbol) != 0) {
+                return 1;
+            }
         }
-        break;
     }
 
     return 0;

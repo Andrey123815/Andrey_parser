@@ -1,6 +1,9 @@
 #ifndef DZ_4_TYPES_AND_TABLES_H
 #define DZ_4_TYPES_AND_TABLES_H
 
+#define S_COUNT 5
+#define L_COUNT 8
+
 #include <stddef.h>
 
 typedef enum {
@@ -52,8 +55,8 @@ static int body(callback_t callback, void *data) { callback(TEXT_FOUND, data); r
 static int end(callback_t callback, void *data) { callback(BOUND_FOUND, data); return 0;}
 
 
-const unsigned int S_COUNT = 5;
-const unsigned int L_COUNT = 8;
+/*const unsigned int S_COUNT = 5;
+const unsigned int L_COUNT = 8;*/
 
 const rule_t table[S_COUNT][L_COUNT] = {
                 /*L_CONTENT_TYPE              L_TO                      L_FROM                        L_DATE                  L_ENTER                 L_NO_ENTER                   L_EOF                     L_TEXT*/
