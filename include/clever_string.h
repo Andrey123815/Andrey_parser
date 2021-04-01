@@ -16,6 +16,8 @@ typedef struct {
 
 string_t *create_string();
 
+string_t *str_tok(string_t *, char);
+
 int free_string(string_t *);
 
 string_t *string_converter(char* string_in_char);

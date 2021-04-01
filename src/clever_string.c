@@ -21,7 +21,14 @@ string_t *create_string() {
 
     return str;
 }
+// эта функция создает новый обьект, после ее вызова всегда вызывать ФРИ!!!
+string_t *str_tok(string_t *input_str, char symbol) {
+    // проверка на вход
+    string_t *new_str = create_string();
 
+    // реализация
+    return new_str;
+}
 
 int free_string(string_t *str) {
     if (str == NULL) {
