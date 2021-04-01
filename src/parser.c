@@ -1,30 +1,22 @@
-#define NOT_SUCCESS   0
-#define SUCCESS       1
-#define TO           11
-#define FROM         22
-#define DATE         33
-#define CONTENT_TYPE 44
-
 #include "parser.h"
-
+#include "types_and_tables.h"
+#include <string.h>
 
 lexem_t get_lexem(string_t *s) {
-    if (strcmp(s->str, (const char *) EOF) == 0) {
+    if (s->str[0] == EOF) {
         return L_EOF;
     }
 
-    string_t *key_t = str_tok(s->str, ":");
+    if (s->size == 0) {
+        return L_ENTER;
+    }
+
+    string_t *key_t = str_tok(s, ':');
+    if (key_t == NULL) {
+        return L_ERR;
+    }
+
     font_lower(key_t);
-
-    if (strcmp(key_t->str, "content-type") == 0) {
-        free_string(key_t);
-        return L_CONTENT_TYPE;
-    }
-
-    if (strcmp(key_t->str, "date") == 0) {
-        free_string(key_t);
-        return L_DATE;
-    }
 
     if (strcmp(key_t->str, "from") == 0) {
         free_string(key_t);
@@ -36,70 +28,65 @@ lexem_t get_lexem(string_t *s) {
         return L_TO;
     }
 
-    if (s->size == 0) {
+    if (strcmp(key_t->str, "date") == 0) {
         free_string(key_t);
-        return L_ENTER;
-    } else {
-        free_string(key_t);
-        return L_NO_ENTER;
+        return L_DATE;
     }
+
+    if (strcmp(key_t->str, "content-type") == 0) {
+        free_string(key_t);
+        return L_CONTENT_TYPE;
+    }
+
     free_string(key_t);
+
+    if (s->size > 0) {
+        return L_TEXT;
+    }
+
     return L_ERR;
 }
 
-string_t *get_multi_bound(string_t *content_type) {
-    string_t *bound_1 = create_string(), *bound_2 = create_string();
-    bound_1->str = "multipart";
-    result_t k;
+int parse(FILE *file_eml, result_t *result) {
+    if (file_eml == NULL || result == NULL) {
+        return -1;
+    }
 
-    if (str_str(bound_1, content_type).result_status == NOT_SUCCESS) {
-        bound_1->str = "";
-        return bound_1;
-    } else {
-        bound_1->str = "boundary=";  // как обозначить кавычки?
-        bound_2->str = "boundary=\"";
+    string_t *current_line = create_string();
 
-        if ((k = str_str(bound_1, content_type)).result_status == SUCCESS) {
-            return delete_symbols_in_begin(content_type, k.ref);
+    state_t state = S_BEGIN;
+
+    while (state != S_END) {
+        if (read_str(file_eml, current_line)) {
+            free_string(current_line);
+            return -1;
         }
 
-        if ((k = str_str(bound_2, content_type)).result_status == SUCCESS) {
-            return delete_symbols_in_begin(content_type, k.ref);
+        lexem_t lexem = get_lexem(current_line);
+
+        if (lexem == L_ERR) {
+            free_string(current_line);
+            return -1;
         }
+
+        rule_t rule = table[state][lexem];
+
+        if (rule.state == S_ERR) {
+            free_string(current_line);
+            return -1;
+        }
+
+        if (rule.action != NULL) {
+            if (rule.action(current_line, result)) {
+                free_string(current_line);
+                return -1;
+            }
+        }
+
+        state = rule.state;
     }
 
-    bound_1->str = "";
+    free_string(current_line);
 
-    return bound_1;
-}
-
-
-int get_number_parts(string_t *text, string_t *boundary, int part) {
-    if (text->size > 0 && str_str(boundary, text).result_status == SUCCESS) {
-        part++;
-    }
-    return part;
-}
-
-
-string_t *get_key_value(string_t *key_with_value, int lexem) {
-    string_t *str = create_string();
-
-    if (lexem == TO)  {
-        str = delete_symbols_in_begin(key_with_value, 3);  // с учетом двоеточия после ключа
-    }
-
-    if (lexem == FROM || lexem == DATE) {
-        str = delete_symbols_in_begin(key_with_value, 5);
-    }
-
-    if (lexem == CONTENT_TYPE) {
-        return get_multi_bound(key_with_value);
-    }
-
-    if ((char)str->str[0] == ' ') {
-        return delete_symbols_in_begin(key_with_value, 1);
-    }
-
-    return str;
+    return 0;
 }

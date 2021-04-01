@@ -29,12 +29,12 @@ string_t *str_tok(string_t *input_str, char sep_symbol) {
     }
 
     string_t *new_str = create_string();
-    unsigned int i = 0;
 
-    for (i = 0; i < input_str->size && input_str->str[i] != sep_symbol; ++i) {
+    for (size_t i = 0; i < input_str->size && input_str->str[i] != sep_symbol; ++i) {
         if (input_str->str[i] == ' ') {
-            free_string(new_str);
-            return NULL;
+            return new_str;
+//            free_string(new_str);
+//            return NULL;
         }
         add_symbol(new_str, input_str->str[i]);
     }
@@ -55,7 +55,7 @@ int copy(string_t *a, string_t *b) {
 }
 
 string_t *font_lower(string_t *key_in_random_font) {
-    for (size_t i = 0; key_in_random_font->str[i] != '\0'; ++i) {
+    for (size_t i = 0; i < key_in_random_font->size; ++i) {
         if (key_in_random_font->str[i] >= 'A' && key_in_random_font->str[i] <= 'Z') {
             key_in_random_font->str[i] += ('a'-'A');
         }
