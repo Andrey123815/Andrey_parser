@@ -10,7 +10,7 @@ int main(int argc, char **argv) {
         return -1;
     }
 
-    FILE *file_eml = fopen(argv[1],"r");
+    FILE *file_eml = fopen(argv[1], "r");
     if (file_eml == NULL) {
         printf("Usage %s invalid\n", argv[1]);
         return -1;
@@ -21,7 +21,7 @@ int main(int argc, char **argv) {
     callback_t  callback;
     req_date_t data;
 
-    while(state != S_EOF) {
+    while (state != S_EOF) {
         if (read_str(file_eml, current_str)) {
             // ебана, продумай как тут быть
             return 1;

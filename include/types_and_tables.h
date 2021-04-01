@@ -28,7 +28,7 @@ typedef enum {
     S_HEAD,
     S_HEAD_END,
     S_BODY,
-    S_BODY_END,
+    S_END,
     S_ERR,
 } state_t;
 
@@ -40,19 +40,11 @@ typedef enum {
     BOUND_FOUND,
 } event_t;
 
-typedef void (*callback_t)(event_t event, void *data);
-typedef int (*action_t)(callback_t callback, void *data);
 
 typedef struct {
     state_t state;
     action_t action;
 } rule_t;
-
-static int keys(callback_t callback, void *data) { callback(KEY, data); return 0;}
-static int values(callback_t callback, void *data) { callback(VALUE, data); return 0;}
-static int body(callback_t callback, void *data) { callback(TEXT_FOUND, data); return 0;}
-static int end(callback_t callback, void *data) { callback(BOUND_FOUND, data); return 0;}
-
 
 /*const unsigned int S_COUNT = 5;
 const unsigned int L_COUNT = 8;*/
