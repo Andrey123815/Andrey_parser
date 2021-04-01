@@ -11,7 +11,6 @@
 
 
 lexem_t get_lexem_key(string_t *s) {
-
     if (strcmp(s->str, (const char *) EOF) == 0) {
         return L_EOF;
     }
