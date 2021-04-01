@@ -183,10 +183,9 @@ int read_str(FILE *fp, string_t *str) {
 }
 
 
-result_t str_str(string_t *a, string_t *multi_a) {
-    result_t res;
-    for (unsigned int i = 0; i < multi_a->size - a->size; ++i) {
-        for (unsigned int j = 0; j < a->size; ++j) {
+long int str_str(string_t *a, string_t *multi_a) {
+    for (size_t i = 0; i < multi_a->size - a->size; ++i) {
+        for (size_t j = 0; j < a->size; ++j) {
             if (a->str[j] != multi_a->str[i]) {
                 break;
             }
@@ -196,11 +195,9 @@ result_t str_str(string_t *a, string_t *multi_a) {
             }
 
             if (j == a->size - 1) {
-                res.result_status = 1;
-                res.ref = i - a->size;
-                return res;
+                return i - a->size;
             }
         }
     }
-    return res;
+    return -1;
 }
