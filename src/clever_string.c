@@ -35,14 +35,6 @@ int free_string(string_t *str) {
 }
 
 
-string_t *string_converter(char* string_in_char) {
-    string_t *ptr = create_string();
-    for (unsigned int i = 0; i < strlen(string_in_char); ++i) {
-        add_symbol(ptr,string_in_char[i]);
-    }
-    return ptr;
-}
-
 
 int add_symbol(string_t *str, char symbol) {
     if (str == NULL) {
