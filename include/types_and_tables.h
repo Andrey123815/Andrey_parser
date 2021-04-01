@@ -4,6 +4,7 @@
 #define S_COUNT 5
 #define L_COUNT 7
 
+#include "callback.h"
 #include <stddef.h>
 
 typedef enum {
@@ -17,12 +18,6 @@ typedef enum {
     L_ERR
 } lexem_t;
 
-typedef struct {
-    lexem_t lexem;
-    int flag;
-    char* end;
-} flag_lexem;
-
 typedef enum {
     S_BEGIN,
     S_HEAD,
@@ -32,22 +27,10 @@ typedef enum {
     S_ERR,
 } state_t;
 
-typedef enum {
-    KEY,
-    VALUE,
-    ENTER,
-    TEXT_FOUND,
-    BOUND_FOUND,
-} event_t;
-
-
 typedef struct {
     state_t state;
     action_t action;
 } rule_t;
-
-/*const unsigned int S_COUNT = 5;
-const unsigned int L_COUNT = 8;*/
 
 const rule_t table[S_COUNT][L_COUNT] = {
                      /*L_TO                          L_FROM                        L_DATE                L_CONTENT_TYPE                  L_ENTER                          L_EOF                    L_TEXT*/  // NOLINT

@@ -6,9 +6,6 @@
 #define CONTENT_TYPE 44
 
 #include "parser.h"
-#include "clever_string.h"
-
-#include <string.h>
 
 
 lexem_t get_lexem(string_t *s) {
