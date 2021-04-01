@@ -21,12 +21,24 @@ string_t *create_string() {
 
     return str;
 }
-// эта функция создает новый обьект, после ее вызова всегда вызывать ФРИ!!!
-string_t *str_tok(string_t *input_str, char symbol) {
-    // проверка на вход
-    string_t *new_str = create_string();
 
-    // реализация
+
+string_t *str_tok(string_t *input_str, char sep_symbol) {
+    if (input_str == NULL) {
+        return NULL;
+    }
+
+    string_t *new_str = create_string();
+    unsigned int i = 0;
+
+    for (i = 0; i < input_str->size && input_str->str[i] != sep_symbol; ++i) {
+        if (input_str->str[i] == ' ') {
+            free_string(new_str);
+            return NULL;
+        }
+        add_symbol(new_str,input_str->str[i]);
+    }
+
     return new_str;
 }
 
@@ -39,15 +51,6 @@ int free_string(string_t *str) {
     free(str);
 
     return 0;
-}
-
-
-string_t *string_converter(char* string_in_char) {
-    string_t *ptr = create_string();
-    for (unsigned int i = 0; i < strlen(string_in_char); ++i) {
-        add_symbol(ptr, string_in_char[i]);
-    }
-    return ptr;
 }
 
 

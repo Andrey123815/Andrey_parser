@@ -15,31 +15,37 @@ lexem_t get_lexem_key(string_t *s) {
         return L_EOF;
     }
 
-    string_t *key_t = string_converter(strtok(s->str, ":"));
+    string_t *key_t = str_tok(s,':');
     font_parser(key_t->str);
 
     if (strcmp(key_t->str, "content-type") == 0) {
+        free_string(key_t);
         return L_CONTENT_TYPE;
     }
 
     if (strcmp(key_t->str, "date") == 0) {
+        free_string(key_t);
         return L_DATE;
     }
 
     if (strcmp(key_t->str, "from") == 0) {
+        free_string(key_t);
         return L_FROM;
     }
 
     if (strcmp(key_t->str, "to") == 0) {
+        free_string(key_t);
         return L_TO;
     }
 
     if (s->size == 0) {
+        free_string(key_t);
         return L_ENTER;
     } else {
+        free_string(key_t);
         return L_NO_ENTER;
     }
-
+    free_string(key_t);
     return L_ERR;
 }
 

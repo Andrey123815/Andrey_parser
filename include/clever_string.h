@@ -16,11 +16,9 @@ typedef struct {
 
 string_t *create_string();
 
-string_t *str_tok(string_t *, char);
+string_t *str_tok(string_t *string, char sep_symbol);
 
 int free_string(string_t *);
-
-string_t *string_converter(char* string_in_char);
 
 int add_symbol(string_t *, char);
 
