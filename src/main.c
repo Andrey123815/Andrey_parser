@@ -17,8 +17,8 @@ int main(int argc, char **argv) {
         return -1;
     }
 
-    int fdin = 0;
-    if ((fdin = fopen(argv[1], "r")) < 0) {
+    FILE *fdin = fopen(argv[1], "r");
+    if (fdin == NULL) {
         printf("Usage %s invalid\n", argv[1]);
         return -1;
     }

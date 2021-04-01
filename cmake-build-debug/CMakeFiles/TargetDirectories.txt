@@ -1,3 +1,0 @@
-/home/andrey/Рабочий стол/DZ_4_M/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/home/andrey/Рабочий стол/DZ_4_M/cmake-build-debug/CMakeFiles/edit_cache.dir
-/home/andrey/Рабочий стол/DZ_4_M/cmake-build-debug/CMakeFiles/dz-4.dir
