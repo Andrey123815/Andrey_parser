@@ -1,5 +1,5 @@
-#ifndef DZ_4_TYPES_AND_TABLES_H
-#define DZ_4_TYPES_AND_TABLES_H
+#ifndef INCLUDE_TYPES_AND_TABLES_H_
+#define INCLUDE_TYPES_AND_TABLES_H_
 
 #define S_COUNT 5
 #define L_COUNT 8
@@ -67,4 +67,4 @@ const rule_t table[S_COUNT][L_COUNT] = {
 /*S_EOF*/  {{S_ERR,NULL}, {S_ERR,NULL}, {S_ERR,NULL},{S_ERR,NULL},{S_ERR,NULL},  {S_ERR,NULL}, {S_ERR,NULL}, {S_ERR,NULL}},
 };
 
-#endif //DZ_4_TYPES_AND_TABLES_H
+#endif  // INCLUDE_TYPES_AND_TABLES_H_

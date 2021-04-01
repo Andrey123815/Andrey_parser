@@ -1,12 +1,9 @@
 #include <stdio.h>
 
-#include "types_and_tables.h"
 #include "clever_string.h"
 #include "parser.h"
 
 #include <sys/stat.h>
-#include <unistd.h>
-#include <sys/mman.h>
 
 int main(int argc, char **argv) {
 
@@ -20,13 +17,6 @@ int main(int argc, char **argv) {
     FILE *fdin = fopen(argv[1], "r");
     if (fdin == NULL) {
         printf("Usage %s invalid\n", argv[1]);
-        return -1;
-    }
-
-    // gain file size
-    struct stat statbuf = {};
-    if (fstat(fdin, &statbuf) < 0) {
-        printf("Impossible to get the %s size\n", argv[1]);
         return -1;
     }
 

@@ -1,5 +1,5 @@
-#ifndef DZ_4_PARSER_H
-#define DZ_4_PARSER_H
+#ifndef INCLUDE_PARSER_H_
+#define INCLUDE_PARSER_H_
 
 #include "types_and_tables.h"
 #include "clever_string.h"
@@ -21,4 +21,4 @@ int get_number_parts(string_t *text, string_t *boundary, int part);  // итер
 
 string_t *get_key_value(string_t *string, int lexem);  // считывает значение ключа
 
-#endif //DZ_4_PARSER_H
+#endif  // INCLUDE_PARSER_H_

@@ -1,5 +1,5 @@
-#ifndef DZ_4_CLEVER_STRING_H
-#define DZ_4_CLEVER_STRING_H
+#ifndef INCLUDE_CLEVER_STRING_H_
+#define INCLUDE_CLEVER_STRING_H_
 
 #include <stdio.h>
 
@@ -32,4 +32,4 @@ int read_str(FILE *, string_t *);
 
 result_t str_str(string_t *a, string_t *multi_a);
 
-#endif //DZ_4_CLEVER_STRING_H
+#endif  // INCLUDE_CLEVER_STRING_H_

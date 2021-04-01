@@ -114,7 +114,7 @@ int read_str(FILE *fp, string_t *str) {
     clear_string(str);
 
     int symbol;
-    int i,flag_str = 0;
+    int i, flag_str = 0;
     while ((symbol = fgetc(fp)) != EOF) {
         if (symbol == '\n' || symbol == '\r') {
 

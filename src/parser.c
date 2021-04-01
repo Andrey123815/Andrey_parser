@@ -67,11 +67,11 @@ string_t *get_multi_bound(string_t *content_type) {
         bound_2->str = "boundary=\"";
 
         if ((k = str_str(bound_1, content_type)).result_status == SUCCESS) {
-            return delete_symbols_in_begin(content_type,k.ref);
+            return delete_symbols_in_begin(content_type, k.ref);
         }
 
         if ((k = str_str(bound_2, content_type)).result_status == SUCCESS) {
-            return delete_symbols_in_begin(content_type,k.ref);
+            return delete_symbols_in_begin(content_type, k.ref);
         }
     }
 
@@ -82,7 +82,7 @@ string_t *get_multi_bound(string_t *content_type) {
 
 
 int get_number_parts(string_t *text, string_t *boundary, int part) {
-    if (text->size > 0 && str_str(boundary,text).result_status == SUCCESS) {
+    if (text->size > 0 && str_str(boundary, text).result_status == SUCCESS) {
         part++;
     }
     return part;
@@ -90,7 +90,6 @@ int get_number_parts(string_t *text, string_t *boundary, int part) {
 
 
 string_t *get_key_value(string_t *key_with_value, int lexem) {
-
     string_t *str = create_string();
 
     if (lexem == TO)  {
