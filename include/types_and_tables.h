@@ -2,7 +2,7 @@
 #define INCLUDE_TYPES_AND_TABLES_H_
 
 #define S_COUNT 5
-#define L_COUNT 8
+#define L_COUNT 7
 
 #include <stddef.h>
 
@@ -28,7 +28,7 @@ typedef enum {
     S_HEAD,
     S_HEAD_END,
     S_BODY,
-    S_BODY_END,
+    S_END,
     S_ERR,
 } state_t;
 
@@ -58,12 +58,12 @@ static int end(callback_t callback, void *data) { callback(BOUND_FOUND, data); r
 const unsigned int L_COUNT = 8;*/
 
 const rule_t table[S_COUNT][L_COUNT] = {
-                /*L_CONTENT_TYPE              L_TO                      L_FROM                        L_DATE                  L_ENTER                 L_NO_ENTER                   L_EOF                     L_TEXT*/  // NOLINT
-/*S_BEGIN*/  {{S_HEAD, NULL},    {S_VALUE, values},   {S_VALUE, values},   {S_VALUE, values},   {S_ERR,NULL},  {S_ERR,NULL}, {S_ERR,NULL}, {S_ERR,NULL}},  // NOLINT
-/*S_VALUE*/{{S_ERR, NULL}, {S_ERR,NULL}, {S_ERR,NULL},{S_ERR,NULL},{S_ENTER,NULL},{S_KEY,NULL}, {S_ERR,NULL}, {S_ERR,NULL}},  // NOLINT
-/*S_ENTER*/{{S_ERR,NULL}, {S_ERR,NULL}, {S_ERR,NULL},{S_ERR,NULL},{S_ERR,NULL},  {S_ERR,NULL}, {S_EOF,NULL}, {S_TEXT,NULL}},  // NOLINT
-/*S_TEXT*/ {{S_ERR,NULL}, {S_ERR,NULL}, {S_ERR,NULL},{S_ERR,NULL},{S_ENTER,NULL},  {S_ERR,NULL}, {S_EOF,NULL}, {S_ERR,NULL}},  // NOLINT
-/*S_EOF*/  {{S_ERR,NULL}, {S_ERR,NULL}, {S_ERR,NULL},{S_ERR,NULL},{S_ERR,NULL},  {S_ERR,NULL}, {S_ERR,NULL}, {S_ERR,NULL}},  // NOLINT
+                     /*L_TO                          L_FROM                        L_DATE                L_CONTENT_TYPE                  L_ENTER                          L_EOF                    L_TEXT*/  // NOLINT
+/*S_BEGIN*/     {{S_HEAD, NULL},{S_HEAD, NULL},{S_HEAD, NULL},{S_HEAD, NULL},{S_ERR, NULL},     {S_ERR, NULL}, {S_ERR, NULL}},  // NOLINT
+/*S_HEAD*/      {{S_HEAD, NULL},{S_HEAD, NULL},{S_HEAD, NULL},{S_HEAD, NULL},{S_HEAD_END, NULL},{S_ERR, NULL}, {S_ERR, NULL}},  // NOLINT
+/*S_HEAD_END*/  {{S_ERR, NULL}, {S_ERR, NULL}, {S_ERR, NULL}, {S_ERR, NULL}, {S_ERR, NULL},     {S_END, NULL}, {S_BODY, NULL}},  // NOLINT
+/*S_BODY*/      {{S_ERR, NULL}, {S_ERR, NULL}, {S_ERR, NULL}, {S_ERR, NULL}, {S_ERR, NULL},     {S_END, NULL}, {S_BODY, NULL}},  // NOLINT
+/*S_END*/       {{S_ERR, NULL}, {S_ERR, NULL}, {S_ERR,NULL},  {S_ERR, NULL}, {S_ERR, NULL},     {S_ERR,NULL},  {S_ERR,NULL}},  // NOLINT
 };
 
 #endif  // INCLUDE_TYPES_AND_TABLES_H_

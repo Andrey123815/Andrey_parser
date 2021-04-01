@@ -42,6 +42,18 @@ string_t *str_tok(string_t *input_str, char sep_symbol) {
     return new_str;
 }
 
+int copy(string_t *a, string_t *b) {
+    if (b == NULL) {
+        return -1;
+    }
+    free_string(a);
+    string_t *c = create_string();
+    for (unsigned int i = 0; i < b->size; ++i) {
+        add_symbol(c,b->str[i]);
+    }
+    return 0;
+}
+
 int free_string(string_t *str) {
     if (str == NULL) {
         return 1;

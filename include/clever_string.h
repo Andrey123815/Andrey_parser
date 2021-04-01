@@ -18,6 +18,8 @@ string_t *create_string();
 
 string_t *str_tok(string_t *string, char sep_symbol);
 
+int copy(string_t *a, string_t *b);
+
 int free_string(string_t *);
 
 int add_symbol(string_t *, char);
