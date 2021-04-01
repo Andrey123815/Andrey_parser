@@ -6,7 +6,6 @@
 #define CONTENT_TYPE 44
 
 #include "parser.h"
-#include <string.h>
 
 
 lexem_t get_lexem(string_t *s) {
@@ -15,7 +14,7 @@ lexem_t get_lexem(string_t *s) {
     }
 
     string_t *key_t = str_tok(s->str, ":");
-    font_parser(key_t);
+    font_lower(key_t);
 
     if (strcmp(key_t->str, "content-type") == 0) {
         free_string(key_t);
@@ -46,16 +45,6 @@ lexem_t get_lexem(string_t *s) {
     }
     free_string(key_t);
     return L_ERR;
-}
-
-
-string_t *font_parser(string_t *key_in_random_font) {
-    for (size_t i = 0; key_in_random_font->str[i] != '\0'; ++i) {
-        if (key_in_random_font->str[i] >= 'A' && key_in_random_font->str[i] <= 'Z') {
-            key_in_random_font->str[i] += ('a'-'A');
-        }
-    }
-    return key_in_random_font;
 }
 
 string_t *get_multi_bound(string_t *content_type) {

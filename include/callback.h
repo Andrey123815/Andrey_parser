@@ -9,7 +9,7 @@ typedef int (*action_t)(string_t *line, req_date_t *data);
 int get_to(string_t *line, req_date_t *data);
 int get_from(string_t *line, req_date_t *data);
 int get_date(string_t *line, req_date_t *data);
-int set_single_part(string_t *line, req_date_t *data);
-int increment_part(string_t *line, req_date_t *data);
+string_t * get_boundary(string_t *line, req_date_t *data);
+int get_parts_in_body(string_t *text, string_t *boundary, req_date_t *data);
 
 #endif  // INCLUDE_CALLBACK_H_

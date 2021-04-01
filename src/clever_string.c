@@ -54,6 +54,15 @@ int copy(string_t *a, string_t *b) {
     return 0;
 }
 
+string_t *font_lower(string_t *key_in_random_font) {
+    for (size_t i = 0; key_in_random_font->str[i] != '\0'; ++i) {
+        if (key_in_random_font->str[i] >= 'A' && key_in_random_font->str[i] <= 'Z') {
+            key_in_random_font->str[i] += ('a'-'A');
+        }
+    }
+    return key_in_random_font;
+}
+
 int free_string(string_t *str) {
     if (str == NULL) {
         return 1;

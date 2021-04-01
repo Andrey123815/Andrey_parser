@@ -20,6 +20,8 @@ string_t *str_tok(string_t *string, char sep_symbol);
 
 int copy(string_t *a, string_t *b);
 
+string_t *font_lower(string_t *key_in_random_font);  // понижает регистр до строчного
+
 int free_string(string_t *);
 
 int add_symbol(string_t *, char);
