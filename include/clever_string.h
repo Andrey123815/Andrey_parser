@@ -10,11 +10,13 @@ typedef struct {
 } string_t;
 
 string_t create_string();
+string_t string_from_char(const char *string);
 int free_string(string_t *string);
 
 int clear_string(string_t *string);
 int resize(string_t *string);
 int add_symbol(string_t *string, char symbol);
+int delete_certain_symbol(string_t *string, char symbol);
 int read_str(FILE *fp, string_t *string);
 
 int font_lower(string_t *string);
