@@ -3,145 +3,87 @@
 #include <string.h>
 
 
-string_t *create_string() {
-    string_t *str = malloc(sizeof(string_t));
-    if (str == NULL) {
-        return NULL;
+static inline int is_null(const string_t *string) {
+    if (string == NULL || string->str == NULL || string->capacity == 0) {
+        return 1;
+    }
+    return 0;
+}
+
+string_t create_string() {
+    string_t str = {.str = NULL, .size = 0, .capacity = 0};
+
+    str.str = malloc(sizeof(char));
+    if (str.str == NULL) {
+        return str;
     }
 
-    str->str = malloc(sizeof(char));
-    if (str->str == NULL) {
-        free(str);
-        return NULL;
-    }
-
-    str->str[0] = '\0';
-    str->size = 0;
-    str->capacity = 1;
+    str.str[0] = '\0';
+    str.capacity = 1;
 
     return str;
 }
-
-
-string_t *str_tok(string_t *input_str, char sep_symbol) {
-    if (input_str == NULL) {
-        return NULL;
-    }
-
-    string_t *new_str = create_string();
-
-    for (size_t i = 0; i < input_str->size && input_str->str[i] != sep_symbol; ++i) {
-        if (input_str->str[i] == ' ') {
-            return new_str;
-//            free_string(new_str);
-//            return NULL;
-        }
-        add_symbol(new_str, input_str->str[i]);
-    }
-
-    return new_str;
-}
-
-int copy(string_t *a, string_t *b) {
-    if (b == NULL) {
-        return -1;
-    }
-    free_string(a);
-    string_t *c = create_string();
-    for (unsigned int i = 0; i < b->size; ++i) {
-        add_symbol(c,b->str[i]);
-    }
-    return 0;
-}
-
-string_t *font_lower(string_t *key_in_random_font) {
-    for (size_t i = 0; i < key_in_random_font->size; ++i) {
-        if (key_in_random_font->str[i] >= 'A' && key_in_random_font->str[i] <= 'Z') {
-            key_in_random_font->str[i] += ('a'-'A');
-        }
-    }
-    return key_in_random_font;
-}
-
-int free_string(string_t *str) {
-    if (str == NULL) {
+int free_string(string_t *string) {
+    if (is_null(string)) {
         return 1;
     }
 
-    free(str->str);
-    free(str);
+    free(string->str);
+
+    string->str = NULL;
+    string->size = 0;
+    string->capacity = 0;
 
     return 0;
 }
 
-int add_symbol(string_t *str, char symbol) {
-    if (str == NULL) {
+int clear_string(string_t *string) {
+    if (is_null(string)) {
         return 1;
     }
 
-    if (str->capacity <= str->size + 1) {
-        if (resize(str) != 0) {
-            return 1;
-        }
-    }
-
-    str->str[str->size++] = symbol;
-    str->str[str->size] = '\0';
+    string->size = 0;
+    string->str[0] = '\0';
 
     return 0;
 }
-
-
-string_t *delete_symbols_in_begin(string_t *key_with_value, int n) {
-    string_t *value = create_string();
-
-    if (n >= key_with_value->size) {
-        printf("n >= size");
-        return value;
-    }
-
-    for (unsigned  int i = n; i < key_with_value->size; ++i) {
-        add_symbol(value, key_with_value->str[i]);
-    }
-    return value;
-}
-
-
-int resize(string_t *str) {
-    if (str == NULL) {
+int resize(string_t *string) {
+    if (is_null(string)) {
         return 1;
     }
 
-    char *tmp = realloc(str->str, str->capacity * 2);
+    char *tmp = realloc(string->str, string->capacity * 2);
     if (tmp == NULL) {
         return 1;
     }
 
-    str->str = tmp;
-    str->capacity *= 2;
+    string->str = tmp;
+    string->capacity *= 2;
 
     return 0;
 }
-
-
-int clear_string(string_t *str) {
-    if (str == NULL) {
+int add_symbol(string_t *string, char symbol) {
+    if (is_null(string)) {
         return 1;
     }
 
-    str->size = 0;
-    str->str[0] = '\0';
+    if (string->capacity <= string->size + 1) {
+        if (resize(string) != 0) {
+            return 1;
+        }
+    }
+
+    string->str[string->size++] = symbol;
+    string->str[string->size] = '\0';
 
     return 0;
 }
-
-
-int read_str(FILE *fp, string_t *str) {
-    if (fp == NULL || str == NULL) {
+int read_str(FILE *fp, string_t *string) {
+    if (fp == NULL || is_null(string)) {
         return 1;
     }
 
-    clear_string(str);
+    clear_string(string);
 
     int symbol;
     int flag_str = 0;
@@ -153,7 +95,7 @@ int read_str(FILE *fp, string_t *str) {
             }
 
             if (symbol == '\t' || symbol == ' ') {
-                add_symbol(str, ' ');
+                add_symbol(string, ' ');
                 symbol = fgetc(fp);
 
                 while ((symbol == '\t') || (symbol == ' ')) {
@@ -161,7 +103,7 @@ int read_str(FILE *fp, string_t *str) {
                 }
 
                 while (symbol != '\r' && symbol != EOF && symbol != '\n') {
-                    add_symbol(str, (char) symbol);
+                    add_symbol(string, (char) symbol);
                     symbol = fgetc(fp);;
                 }
 
@@ -173,36 +115,90 @@ int read_str(FILE *fp, string_t *str) {
         }
 
         if (flag_str < 1) {
-            if (add_symbol(str, (char) symbol) != 0) {
+            if (add_symbol(string, (char) symbol) != 0) {
                 return 1;
             }
         }
     }
 
     if (symbol == EOF) {
-        clear_string(str);
-        add_symbol(str, EOF);
+        clear_string(string);
+        add_symbol(string, EOF);
     }
 
     return 0;
 }
 
+int font_lower(string_t *string) {
+    if (is_null(string)) {
+        return 1;
+    }
 
-long int str_str(string_t *a, string_t *multi_a) {
-    for (size_t i = 0; i < multi_a->size - a->size; ++i) {
-        for (size_t j = 0; j < a->size; ++j) {
-            if (a->str[j] != multi_a->str[i]) {
-                break;
-            }
-
-            if (a->str[j] == multi_a->str[i]) {
-                ++i;
-            }
-
-            if (j == a->size - 1) {
-                return i - a->size;
-            }
+    for (size_t i = 0; i < string->size; ++i) {
+        if (string->str[i] >= 'A' && string->str[i] <= 'Z') {
+            string->str[i] += ('a' - 'A');
         }
     }
-    return -1;
+
+    return 0;
+}
+string_t str_tok(string_t *input_str, char sep_symbol) {
+    if (is_null(input_str)) {
+        return create_string();
+    }
+
+    string_t new_str = create_string();
+
+    for (size_t i = 0; i < input_str->size && input_str->str[i] != sep_symbol; ++i) {
+        if (input_str->str[i] == ' ') {
+            return new_str;
+        }
+        add_symbol(&new_str, input_str->str[i]);
+    }
+
+    return new_str;
+}
+int copy(string_t *destination, const string_t *source) {
+    if (destination == NULL || is_null(source)) {
+        return 1;
+    }
+
+    free_string(destination);
+    *destination = create_string();
+
+    for (unsigned int i = 0; i < source->size; ++i) {
+        add_symbol(destination, source->str[i]);
+    }
+
+    return 0;
+}
+string_t delete_symbols_in_begin(const string_t *source, int num) {
+    if (is_null(source)) {
+        return create_string();
+    }
+
+    string_t value = create_string();
+
+    if (num >= source->size) {
+        printf("num >= size");
+        return value;
+    }
+
+    for (unsigned  int i = num; i < source->size; ++i) {
+        add_symbol(&value, source->str[i]);
+    }
+
+    return value;
+}
+long int str_str(const string_t *string1, const string_t *string2) {
+    if (is_null(string1) || is_null(string2)) {
+        return -1;
+    }
+
+    char *pch = strstr(string1->str, string2->str);
+    if (pch == NULL) {
+        return -1;
+    }
+
+    return pch - string1->str;
 }

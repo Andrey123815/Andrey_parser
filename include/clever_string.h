@@ -9,31 +9,18 @@ typedef struct {
     size_t capacity;
 } string_t;
 
-//typedef struct {
-//    int result_status;
-//    unsigned int ref;
-//} result_t;
+string_t create_string();
+int free_string(string_t *string);
 
-string_t *create_string();
+int clear_string(string_t *string);
+int resize(string_t *string);
+int add_symbol(string_t *string, char symbol);
+int read_str(FILE *fp, string_t *string);
 
-string_t *str_tok(string_t *string, char sep_symbol);
-
-int copy(string_t *a, string_t *b);
-
-string_t *font_lower(string_t *key_in_random_font);  // понижает регистр до строчного
-
-int free_string(string_t *);
-
-int add_symbol(string_t *, char);
-
-string_t *delete_symbols_in_begin(string_t *key_with_value, int n);
-
-int resize(string_t *);
-
-int clear_string(string_t *);
-
-int read_str(FILE *, string_t *);
-
-//result_t str_str(string_t *a, string_t *multi_a);
+int font_lower(string_t *string);
+string_t str_tok(string_t *string, char sep_symbol);
+int copy(string_t *destination, const string_t *source);
+string_t delete_symbols_in_begin(const string_t *source, int num);
+long int str_str(const string_t *string1, const string_t *string2);
 
 #endif  // INCLUDE_CLEVER_STRING_H_

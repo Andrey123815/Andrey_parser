@@ -1,8 +1,4 @@
-#define NOT_SUCCESS   0
-#define SUCCESS       1
-
 #include "parser.h"
-#include <stddef.h>
 
 
 int get_from(string_t *line, result_t *data) {
@@ -23,8 +19,8 @@ int get_date(string_t *line, result_t *data) {
     return 0;
 }
 
-/*string_t* get_boundary(string_t *content_type, result_t *data) {
-    string_t *bound_1 = create_string(), *bound_2 = create_string();
+/*string_t get_boundary(string_t *content_type, result_t *data) {
+    string_t bound_1 = create_string(), *bound_2 = create_string();
     bound_1->str = "multipart";
     long int k;
 

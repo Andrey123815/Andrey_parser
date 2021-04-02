@@ -11,14 +11,14 @@ result_t create_result() {
     return result;
 }
 int free_result(result_t *result) {
-    free_string(result->from);
-    free_string(result->to);
-    free_string(result->date);
+    free_string(&result->from);
+    free_string(&result->to);
+    free_string(&result->date);
 
     return 0;
 }
 int print_result(FILE *fp, result_t *result) {
-    if (fprintf(fp, "%s|%s|%s|%d", result->from->str, result->to->str, result->date->str, result->part) != 4) {
+    if (fprintf(fp, "%s|%s|%s|%d", result->from.str, result->to.str, result->date.str, result->part) != 4) {
         return 1;
     }
 

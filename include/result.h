@@ -4,9 +4,9 @@
 #include "clever_string.h"
 
 typedef struct {
-    string_t *from;
-    string_t *to;
-    string_t *date;
+    string_t from;
+    string_t to;
+    string_t date;
     int part;
 } result_t;
 
