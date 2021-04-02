@@ -1,37 +1,41 @@
 #define NOT_SUCCESS   0
 #define SUCCESS       1
 
-#include "clever_string.h"
 #include "parser.h"
-
 #include <stddef.h>
 
-int get_to(string_t *line, req_date_t *data) {
+
+int get_from(string_t *line, result_t *data) {
+    data->from = delete_symbols_in_begin(line, 5);  // с учетом двоеточия после ключа
+
+    return 0;
+}
+
+int get_to(string_t *line, result_t *data) {
     data->to = delete_symbols_in_begin(line, 3);  // с учетом двоеточия после ключа
 
+    return 0;
 }
 
-int get_from(string_t *line, req_date_t *data) {
-    data->from = delete_symbols_in_begin(line, 5);  // с учетом двоеточия после ключа
-}
-
-int get_date(string_t *line, req_date_t *data) {
+int get_date(string_t *line, result_t *data) {
     data->date = delete_symbols_in_begin(line, 5);  // с учетом двоеточия после ключа
+
+    return 0;
 }
 
-string_t* get_boundary(string_t *content_type, req_date_t *data) {
+/*string_t* get_boundary(string_t *content_type, result_t *data) {
     string_t *bound_1 = create_string(), *bound_2 = create_string();
     bound_1->str = "multipart";
-    result_t k;
+    long int k;
 
-    if (str_str(bound_1, content_type).result_status == NOT_SUCCESS) {
+    if (str_str(bound_1, content_type) < 0) {
         bound_1->str = "";
         return bound_1;
     } else {
         bound_1->str = "boundary=";  // как обозначить кавычки?
         bound_2->str = "boundary=\"";
 
-        if ((k = str_str(bound_1, content_type)).result_status == SUCCESS) {
+        if (k = str_str(bound_1, content_type)) {
             return delete_symbols_in_begin(content_type, k.ref);  // check without quotes
         }
 
@@ -43,9 +47,9 @@ string_t* get_boundary(string_t *content_type, req_date_t *data) {
     return NULL;
 }
 
-int get_parts_in_body(string_t *text, string_t *boundary, req_date_t *data) {
-    if (str_str(boundary, text).result_status == SUCCESS) {
+int get_parts_in_body(string_t *text, string_t *boundary, result_t *data) {
+    if (str_str(boundary, text) >= 0) {
         data->part++;
     }
     return 0;
-}
+}*/
