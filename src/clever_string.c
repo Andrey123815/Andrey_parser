@@ -23,6 +23,17 @@ string_t create_string() {
 
     return str;
 }
+
+string_t string_from_char(const char *string) {
+    string_t string_new = create_string();
+
+    for (unsigned int i = 0; i < strlen(string); ++i) {
+        add_symbol(&string_new, string[i]);
+    }
+
+    return string_new;
+}
+
 int free_string(string_t *string) {
     if (is_null(string)) {
         return 1;
@@ -78,6 +89,25 @@ int add_symbol(string_t *string, char symbol) {
 
     return 0;
 }
+
+int delete_certain_symbol(string_t *string, char symbol) {
+    string_t string_new = create_string();
+
+    if (string->size == 0) {
+        return -1;
+    }
+
+    for(unsigned int i = 0; i < string->size; ++i) {
+        if (string->str[i] != symbol) {
+            string_new.str[i] += string->str[i];
+        }
+    }
+    copy(string, &string_new);
+    free_string(&string_new);
+
+    return 0;
+}
+
 int read_str(FILE *fp, string_t *string) {
     if (fp == NULL || is_null(string)) {
         return 1;
