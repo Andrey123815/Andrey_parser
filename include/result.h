@@ -7,6 +7,7 @@ typedef struct {
     string_t from;
     string_t to;
     string_t date;
+    string_t boundary;
     int part;
 } result_t;
 

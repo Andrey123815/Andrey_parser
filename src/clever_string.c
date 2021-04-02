@@ -91,19 +91,20 @@ int add_symbol(string_t *string, char symbol) {
 }
 
 int delete_certain_symbol(string_t *string, char symbol) {
-    string_t string_new = create_string();
-
-    if (string->size == 0) {
-        return -1;
+    if (is_null(string)) {
+        return 1;
     }
+
+    string_t string_tmp = create_string();
 
     for(unsigned int i = 0; i < string->size; ++i) {
         if (string->str[i] != symbol) {
-            string_new.str[i] += string->str[i];
+            add_symbol(&string_tmp, string->str[i]);
         }
     }
-    copy(string, &string_new);
-    free_string(&string_new);
+
+    copy(string, &string_tmp);
+    free_string(&string_tmp);
 
     return 0;
 }
@@ -202,7 +203,7 @@ int copy(string_t *destination, const string_t *source) {
 
     return 0;
 }
-string_t delete_symbols_in_begin(const string_t *source, int num) {
+string_t delete_symbols_in_begin(const string_t *source, long int num) {
     if (is_null(source)) {
         return create_string();
     }
@@ -214,7 +215,7 @@ string_t delete_symbols_in_begin(const string_t *source, int num) {
         return value;
     }
 
-    for (unsigned  int i = num; i < source->size; ++i) {
+    for (unsigned int i = num; i < source->size; ++i) {
         add_symbol(&value, source->str[i]);
     }
 

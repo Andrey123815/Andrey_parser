@@ -22,7 +22,7 @@ int read_str(FILE *fp, string_t *string);
 int font_lower(string_t *string);
 string_t str_tok(string_t *string, char sep_symbol);
 int copy(string_t *destination, const string_t *source);
-string_t delete_symbols_in_begin(const string_t *source, int num);
+string_t delete_symbols_in_begin(const string_t *source, long int num);
 long int str_str(const string_t *string1, const string_t *string2);
 
 #endif  // INCLUDE_CLEVER_STRING_H_
