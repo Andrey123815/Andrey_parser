@@ -20,27 +20,27 @@ int get_date(string_t *line, result_t *data) {
 }
 
 string_t get_boundary(string_t *content_type, result_t *data) {
-    string_t bound_1 = create_string();
-    string_t bound_2 = create_string();
-    bound_1.str = "multipart";
-    long int k;
-
-    if (str_str(content_type, &bound_1) < 0) {
-        bound_1.str = "";
-        return bound_1;
-    } else {
-        bound_1.str = "boundary=";  // как обозначить кавычки?
-
-        if (str_str(&bound_1, content_type) {
-            return delete_symbols_in_begin(content_type, k.ref);  // check without quotes
-        }
-
-        if (str_str(&bound_2, content_type)) {
-            return delete_symbols_in_begin(content_type, k.ref);  // with quotes
-        }
+    if (content_type == NULL || data == NULL) {
+        return create_string();
     }
 
-    return delete_symbols_in_begin(bou);
+    string_t key = string_from_char("multipart");
+
+    if (str_str(content_type, &key) < 0) {
+        free_string(&key);
+        return create_string();
+    }
+    free_string(&key);
+
+    key = string_from_char("boundary=");
+
+    long int pos = str_str(content_type, &key);
+    if (pos < 0) {
+        free_string(&key);
+        return create_string();
+    }
+
+    return delete_symbols_in_begin(content_type, pos);
 }
 
 int get_parts_in_body(string_t *text, string_t *boundary, result_t *data) {
