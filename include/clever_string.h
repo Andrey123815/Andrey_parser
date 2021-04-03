@@ -16,7 +16,7 @@ int free_string(string_t *string);
 int clear_string(string_t *string);
 int resize(string_t *string);
 int add_symbol(string_t *string, char symbol);
-int delete_certain_symbol(string_t *string, char symbol);
+int delete_symbol(string_t *string, int i);
 int read_str(FILE *fp, string_t *string);
 
 int font_lower(string_t *string);

@@ -90,21 +90,15 @@ int add_symbol(string_t *string, char symbol) {
     return 0;
 }
 
-int delete_certain_symbol(string_t *string, char symbol) {
+int delete_symbol(string_t *string, int i) {
     if (is_null(string)) {
         return 1;
     }
 
-    string_t string_tmp = create_string();
-
-    for(unsigned int i = 0; i < string->size; ++i) {
-        if (string->str[i] != symbol) {
-            add_symbol(&string_tmp, string->str[i]);
-        }
+    for (int j = i; j < string->size - 1; ++j) {
+        string->str[i] = string->str[i+1];
     }
-
-    copy(string, &string_tmp);
-    free_string(&string_tmp);
+    string->size--;
 
     return 0;
 }

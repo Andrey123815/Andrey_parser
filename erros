@@ -1,0 +1,11 @@
+apache-message-news-mime  number parts if body after boundary == null
+barely-divine-heron  ununderstand mistake with str tab
+barely-humbly-top-deer ununderstand mistake \n and not read some strings
+broken-ctype number parts like 1
+comic-mole problem with string like 2
+encoded-header part = 0 must be part 1
+long-header like 6
+multipart double free() 
+poetic-llama3 giant test may be problems with memory
+yahoo part = 0 must be part = 3
+yahoo.eml double free()

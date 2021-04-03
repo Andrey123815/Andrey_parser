@@ -83,7 +83,7 @@ int parse(FILE *file_eml, result_t *result) {
 
         state = rule.state;
     }
-
+    test_results(result);
     free_string(&current_line);
 
     return 0;
