@@ -95,7 +95,7 @@ int delete_symbol(string_t *string, int i) {
         return 1;
     }
 
-    for (int j = i; j < string->size - 1; ++j) {
+    for (int j = i; j <= string->size; ++j) {
         string->str[i] = string->str[i+1];
     }
     string->size--;
@@ -111,12 +111,16 @@ int read_str(FILE *fp, string_t *string) {
     clear_string(string);
 
     int symbol;
-    int flag_str = 0;
+    int flag_multi_str = 0;
     while ((symbol = fgetc(fp)) != EOF) {
         if (symbol == '\n' || symbol == '\r') {
-            if ((symbol = fgetc(fp)) != EOF && symbol != '\t' && symbol != ' ') {
+            if ((symbol = fgetc(fp)) != EOF && symbol != '\t' && symbol != ' ' && symbol > 31) {
                 fseek(fp, -1, SEEK_CUR);
                 break;
+            }
+
+            while (symbol <= 31) {
+                symbol = fgetc(fp);
             }
 
             if (symbol == '\t' || symbol == ' ') {
@@ -133,13 +137,21 @@ int read_str(FILE *fp, string_t *string) {
                 }
 
                 if (symbol == '\n' || symbol == '\r') {
-                    fseek(fp, -1, SEEK_CUR);
-                    flag_str = 1;
+                    //fseek(fp, -1, SEEK_CUR);
+                    flag_multi_str = 1;
                 }
+            } else {
+                fseek(fp, -1, SEEK_CUR);
+                if (symbol == EOF) {
+                    clear_string(string);
+                    add_symbol(string, EOF);
+                }
+                flag_multi_str = 0;
+                return 0;
             }
         }
 
-        if (flag_str < 1) {
+        if (flag_multi_str < 1) {
             if (add_symbol(string, (char) symbol) != 0) {
                 return 1;
             }

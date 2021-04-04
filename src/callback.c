@@ -58,10 +58,10 @@ int get_boundary(string_t *content_type, result_t *data) {
 
         int i = 0;
         while (i < data->boundary.size && data->boundary.str[i] != '\"') {
-            ++i;
+            i++;
         }
 
-        for (int j = i; j < data->boundary.size; ++j) {
+        for (int j = i; j <= data->boundary.size; ++j) {
             delete_symbol(&data->boundary, j);
         }
     }
@@ -82,9 +82,9 @@ int get_parts_in_body(string_t *text, result_t *data) {
     return 0;
 }
 
-void add_slash(string_t string) {
+/*int add_slash(string_t string) {
     if (string.size == 0) {
-        return;
+        return -1;
     }
 
     string_t new_str = create_string();
@@ -104,6 +104,8 @@ void add_slash(string_t string) {
 
     copy(&string,&new_str);
     free_string(&new_str);
+
+    return 0;
 }
 
 result_t *test_results(result_t *data) {
@@ -111,4 +113,4 @@ result_t *test_results(result_t *data) {
     add_slash(data->from);
     add_slash(data->date);
     return data;
-}
+}*/

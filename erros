@@ -1,6 +1,7 @@
-apache-message-news-mime  number parts if body after boundary == null
-barely-divine-heron  ununderstand mistake with str tab
-barely-humbly-top-deer ununderstand mistake \n and not read some strings
+# apache-message-news-mime  number parts if body after boundary == null
+the problem of not seenable simbols was solved but not success work program
+? barely-divine-heron  ununderstand mistake with str tab
+? barely-humbly-top-deer ununderstand mistake \n and not read some strings
 broken-ctype number parts like 1
 comic-mole problem with string like 2
 encoded-header part = 0 must be part 1

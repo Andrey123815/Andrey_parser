@@ -50,6 +50,8 @@ int parse(FILE *file_eml, result_t *result) {
         return -1;
     }
 
+    int slash_n = 0;
+    int i = 0, flag_next_slash_n = 0;
     string_t current_line = create_string();
 
     state_t state = S_BEGIN;
@@ -61,6 +63,38 @@ int parse(FILE *file_eml, result_t *result) {
         }
 
         lexem_t lexem = get_lexem(&current_line);
+
+
+        if ((lexem == L_TEXT || lexem == L_TO || lexem == L_FROM || lexem == L_CONTENT_TYPE || lexem == L_DATE || lexem == L_ENTER) && (state == S_BODY || state == S_HEAD_END)) {
+            if (current_line.size == 0 && i == 1) {  // if считывается только boundary тело - пустое
+                string_t key = create_string();
+                key = string_from_char("boundary=");
+                long int pos = str_str(&current_line, &key);
+                if (pos >= 0) {  // проверка на наличие в строке значения boundary
+                    result->part--;
+                } else {
+                    i = 0;
+                }
+                free_string(&key);
+            }
+
+            if (current_line.size != 0) {i++; flag_next_slash_n++;}
+            if (current_line.size == 0 && flag_next_slash_n == 1) {result->part--;}
+            if (current_line.size == 0) {slash_n++;}  //считаем слеш_н для определения нового парта
+
+            if(current_line.size != 0 && slash_n != 0) {  // переход в новый парт письма
+                slash_n = 0;
+                i = 1;     // строка 1 нового парта считана -> i = 1,slash_n обнуляем
+
+                string_t key = create_string();
+                key = string_from_char("boundary=");
+                long int pos = str_str(&current_line, &key);
+                if (pos >= 0) {  // проверка на наличие в строке значения boundary
+                    flag_next_slash_n++;
+                }
+                free_string(&key);
+            }
+        }
 
         if (lexem == L_ERR) {
             free_string(&current_line);
@@ -83,7 +117,6 @@ int parse(FILE *file_eml, result_t *result) {
 
         state = rule.state;
     }
-    test_results(result);
     free_string(&current_line);
 
     return 0;
