@@ -1,1 +1,0 @@
-/usr/bin/cc -g   CMakeFiles/DZ_4_M.dir/main.c.o  -o DZ_4_M 
