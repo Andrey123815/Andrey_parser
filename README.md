@@ -1,20 +1,18 @@
 <div  align="left">
  
-## About Repostitory
+# About Repostitory
   
 #### Writing a library for working with smart C-strings and use to parse letters
   
   
   
-## Languages and technologes  
-![Python](https://img.shields.io/badge/-Python-090909?style=for-the-badge&logo=Python&logoColor=6296CC)
-![PyTest](https://img.shields.io/badge/-PyTest-090909?style=for-the-badge&logo=PyTest&logoColor=6296CC) 
+# Languages and technologies  
+![C](https://img.shields.io/badge/-C-090909?style=for-the-badge&logo=C&logoColor=6296CC)
 <br>
-  <br>
 
   
   
-## Follow me
+# Follow me
   
 [![Youtube](https://img.shields.io/badge/-Youtube-090909?style=for-the-badge&logo=youtube&logoColor=ff0000)](https://youtube.com/channel/UCBT7kqu7CPeJ5XI0AKoebPw)
 [![Telegram](https://img.shields.io/badge/-Telegram-090909?style=for-the-badge&logo=telegram&logoColor=27A0D9)](https://t.me/And_Dayk)
