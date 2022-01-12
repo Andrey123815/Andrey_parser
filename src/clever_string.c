@@ -22,6 +22,7 @@ string_t *create_string() {
     return str;
 }
 
+
 int free_string(string_t *str) {
     if (str == NULL) {
         return 1;
@@ -49,6 +50,7 @@ int add_symbol(string_t *str, char symbol) {
 
     return 0;
 }
+
 
 int delete_symbol(string_t *str, char symbol) {
     if (str == NULL) {
@@ -82,6 +84,8 @@ int resize(string_t *str) {
 
     return 0;
 }
+
+
 int clear_string(string_t *str) {
     if (str == NULL) {
         return 1;
@@ -92,6 +96,8 @@ int clear_string(string_t *str) {
 
     return 0;
 }
+
+
 int read_str(FILE *fp, string_t *str) {
     if (fp == NULL || str == NULL) {
         return 1;
@@ -125,3 +131,4 @@ int read_str(FILE *fp, string_t *str) {
 
     return 0;
 }
+

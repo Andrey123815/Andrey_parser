@@ -3,6 +3,7 @@
 
 #include <stddef.h>
 
+
 typedef enum {
     L_CONTENT_TYPE,
     L_OTHER_KEYS,
@@ -13,11 +14,13 @@ typedef enum {
     L_BOUND,
 } lexem_t;
 
+
 typedef struct {
     lexem_t lexem;
     int flag;
     char* end;
 } flag_lexem;
+
 
 typedef enum {
     S_BEGIN,
@@ -31,6 +34,7 @@ typedef enum {
     S_ERR
 } state_t;
 
+
 typedef enum {
     KEY,
     VALUE,
@@ -39,20 +43,38 @@ typedef enum {
     BOUND_FOUND,
 } cjson_event_t;
 
+
 typedef void (*cjson_callback_t)(cjson_event_t event, const char *s, const char *end, void *data);
+
+
 typedef void *(action_t)(char*, char**end, cjson_callback_t callback, void *data);
-//typedef int (*action_t)(const char *s, const char **end, cjson_callback_t callback, void *data);
+
 
 typedef struct {
     state_t state;
     action_t action;
 } rule_t;
 
-static int keys(const char *s, const char **end, cjson_callback_t callback, void *data) { callback(KEY, s, *end, data); return 0; }
-static int values(const char *s, const char **end, cjson_callback_t callback, void *data) { callback(VALUE, s, *end, data); return 0; }
-//static int enter(const char *s, const char **end, cjson_callback_t callback, void *data) { callback(ENTER, s, *end, data); return 0; }
-static int text_bound(const char *s, const char **end, cjson_callback_t callback, void *data) { callback(TEXT_FOUND, s, *end, data); return 0; }
-static int end(const char *s, const char **end, cjson_callback_t callback, void *data) { callback(BOUND_FOUND, s, *end, data); return 0; }
+
+static int keys(const char *s, const char **end, cjson_callback_t callback, void *data { 
+	callback(KEY, s, *end, data); 
+	return 0; 
+}
+
+static int values(const char *s, const char **end, cjson_callback_t callback, void *data) { 
+	callback(VALUE, s, *end, data); 
+	return 0;
+}
+
+static int text_bound(const char *s, const char **end, cjson_callback_t callback, void *data) { 
+	callback(TEXT_FOUND, s, *end, data); 
+	return 0;
+}
+
+static int end(const char *s, const char **end, cjson_callback_t callback, void *data){ 
+	callback(BOUND_FOUND, s, *end, data);
+	return 0;
+}
 
 
 const unsigned int S_COUNT = 9;
@@ -68,4 +90,6 @@ const rule_t table[S_COUNT][L_COUNT] = {
 /*S_END*/            {S_ERR,NULL},              {S_ERR,NULL},             {S_ERR,NULL},  {S_ERR,NULL},  {S_ERR,end},  {S_ERR,NULL}
 };
 
+
 #endif //DZ_4_PARSER_H
+
